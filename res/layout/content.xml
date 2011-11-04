@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    
+    <TextView 
+        android:layout_alignParentTop="true"
+        android:id="@+id/titleTv"
+        android:text="Title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:maxLength="100"/>
+    
+     <TextView 
+         android:layout_below="@+id/titleTv"
+        android:id="@+id/moreTv"
+        android:text="More"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        />
+     
+     <LinearLayout 
+         android:layout_alignParentBottom="true"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:id="@+id/lin"
+         android:orientation="horizontal">
+         
+         <ImageView 
+             android:id="@+id/img1"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:src="@drawable/ic_launcher"/>
+         
+          <ImageView 
+              android:id="@+id/img2"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:src="@drawable/ic_launcher"/>
+          
+           <ImageView 
+               android:id="@+id/img3"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:src="@drawable/ic_launcher"/>
+           
+            <ImageView 
+                android:id="@+id/img4"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:src="@drawable/ic_launcher"/>
+         
+         
+     </LinearLayout>
+    
+    
+
+    
+
+</RelativeLayout>
