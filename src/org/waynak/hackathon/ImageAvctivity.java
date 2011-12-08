@@ -90,37 +90,47 @@ public class ImageAvctivity extends Activity implements OnTouchListener {
 	                       //URL imageUrl = new URL(imageUri.toString());
 
 	                       //realBmp = BitmapFactory.decodeStream(imageUrl.openStream());
-	            	   		realBmp = BitmapFactory.decodeResource(this.getResources(), i.getExtras().getInt("resource"));
 
-	                       Display display = getWindowManager().getDefaultDisplay();
-	                       int width = display.getWidth();
-	                       int height = display.getHeight();
 
-	                       Log.v(TAG, "Display Width: " + display.getWidth());
-	                       Log.v(TAG, "Display Height: " + display.getHeight());
+	            // Get the current display to calculate ratios
+	               
+					Display currentDisplay = getWindowManager().getDefaultDisplay();
+					
+					BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();
+					bmpFactoryOptions.inJustDecodeBounds = true;
 
-	                       Log.v(TAG, "BMP Width: " + realBmp.getWidth());
-	                       Log.v(TAG, "BMP Height: " + realBmp.getHeight());
+					realBmp = BitmapFactory.decodeResource(this.getResources(), i.getExtras().getInt("resource"),bmpFactoryOptions);
 
-	                       if (realBmp.getWidth() > width || realBmp.getHeight() > height) {
+					// Ratios between the display and the image
+					double widthRatio =  Math.floor(bmpFactoryOptions.outWidth / currentDisplay.getWidth());
+					double heightRatio = Math.floor(bmpFactoryOptions.outHeight / currentDisplay.getHeight());
 
-	                               float heightRatio = (float) height / (float) realBmp.getHeight();
-	                               float widthRatio = (float) width / (float) realBmp.getWidth();
-
-	                               Log.v(TAG, "heightRatio:" + heightRatio);
-	                               Log.v(TAG, "widthRatio: " + widthRatio);
-
-	                               float scale = widthRatio;
-	                               if (heightRatio < widthRatio) {
-	                                       scale = heightRatio;
-	                               }
-
-	                               matrix.setScale(scale, scale);
-	                               Log.v(TAG, "Scale: " + scale);
-	                       } else {
-	                               Log.v(TAG, "NOTNOTNOT");
-	                               matrix.setTranslate(1f, 1f);
-	                       }
+					int inSampleSize = 1;
+					
+					// If both of the ratios are greater than 1,
+					// one of the sides of the image is greater than the screen
+					if (heightRatio > 1 && widthRatio > 1) {
+						if (heightRatio > widthRatio) {
+							// Height ratio is larger, scale according to it
+							inSampleSize = (int)heightRatio;
+						} else {
+							// Width ratio is larger, scale according to it
+							inSampleSize = (int)widthRatio;
+						}
+					}
+					else
+					{
+						inSampleSize = 1;
+					}
+					
+					Log.v("HEY**",""+inSampleSize);
+					
+					bmpFactoryOptions.inSampleSize = inSampleSize*2;
+			
+					// Decode it for real
+					bmpFactoryOptions.inJustDecodeBounds = false;	               
+	               
+	            	   	realBmp = BitmapFactory.decodeResource(this.getResources(), i.getExtras().getInt("resource"),bmpFactoryOptions);
 
 	                       view.setImageBitmap(realBmp);
 	                       view.setImageMatrix(matrix);
