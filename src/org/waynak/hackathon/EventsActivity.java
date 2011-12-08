@@ -106,8 +106,8 @@ public class EventsActivity extends Activity
 					i.putExtra("title", eventList[clickedEventPosition].eventName);
 					i.putExtra("description", eventList[clickedEventPosition].description);
 					startActivity(i);
-					TextView mainText = (TextView) findViewById(R.id.mainText);
-					mainText.setText(eventList[position].description);
+					//TextView mainText = (TextView) findViewById(R.id.mainText);
+					//mainText.setText(eventList[position].description);
 			    }
 		});
 
