@@ -73,7 +73,14 @@ public class EventsAdapater extends ArrayAdapter<Event> {
 		holder.eventView.setText(eventList[position].eventName);
 		Log.v(LOGTAG,eventList[position].eventName);
 		//holder.imageView.setImageURI(Uri.parse(eventList[position].imageUrl));
-		holder.imageView.setImageResource(eventList[position].imageId);
+		
+		BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();
+		bmpFactoryOptions.inSampleSize = 4;
+		Bitmap realBmp = BitmapFactory.decodeResource(context.getResources(), eventList[position].imageId,bmpFactoryOptions);
+
+		
+		//holder.imageView.setImageResource(eventList[position].imageId);
+		holder.imageView.setImageBitmap(realBmp);
 		//URL url = new URL(imageList[position]);
 		
 		//InputStream is=null;
