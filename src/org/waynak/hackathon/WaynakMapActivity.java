@@ -37,6 +37,8 @@ public class WaynakMapActivity extends MapActivity implements LocationListener {
 	MapView mv;
 	GeoPoint p;
      
+	boolean gotLocation = true;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -73,7 +75,13 @@ public class WaynakMapActivity extends MapActivity implements LocationListener {
 		mapOverlays.add(itemizedoverlay);		
 
 		lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 6000l, 5.0f, this);	}
+		lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 6000l, 5.0f, this);
+		
+		MapController mc = mv.getController();
+			
+		p = new GeoPoint((int) (24.484859 * 1000000), (int) (54.35415 * 1000000));
+		mc.animateTo(p);
+	}
 	 /*
      * Standard method for menu items.  Uses res/menu/image_editor_menu.xml
      */
@@ -119,13 +127,15 @@ public class WaynakMapActivity extends MapActivity implements LocationListener {
 	public void onLocationChanged(Location location) {
 	Log.v("MAPTEST",location.getLatitude() + " " + location.getLongitude());
 		
-		MapController mc = mv.getController();
-		
-		p = new GeoPoint((int) (location.getLatitude() * 1000000), (int) (location.getLongitude() * 1000000));
-		mc.animateTo(p);
-		//http://code.google.com/android/add-ons/google-apis/reference/com/google/android/maps/MapController.html#setZoom(int)
-		mc.setZoom(14);
-		
+		if (gotLocation == false) {
+			MapController mc = mv.getController();
+					
+			p = new GeoPoint((int) (location.getLatitude() * 1000000), (int) (location.getLongitude() * 1000000));
+			mc.animateTo(p);
+			//http://code.google.com/android/add-ons/google-apis/reference/com/google/android/maps/MapController.html#setZoom(int)
+			mc.setZoom(5);
+			gotLocation = true;
+		}
 	
 	}
 
